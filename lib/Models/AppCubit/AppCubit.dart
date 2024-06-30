@@ -70,6 +70,29 @@ class AppCubit extends Cubit<AppStates>{
 
   }
 
+  PostsAllData? userPosts;
+  void GetUserPostsData(){
+
+    emit(GetUserPostsAllDataLoading());
+
+    DioHelper.GetData(
+      url: "/posts/",
+      token: 'Token $token',
+    ).then((value) {
+      userPosts = PostsAllData.fromJson(value.data);
+
+      print(userPosts!.content[0].title);
+      print(userPosts!.content[0].image_url);
+      emit(GetUserPostsAllDataSuccess());
+
+    }).catchError((onError){
+      print(onError.toString());
+
+      emit(GetUserPostsAllDataError());
+    });
+
+  }
+
   ProfileData? profileData;
   void GetProfileData(){
     emit(GetProfileDataLoading());

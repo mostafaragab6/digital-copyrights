@@ -142,14 +142,17 @@ Widget CreateItem(
             children: [
               CircleAvatar(
                 radius: 19.0,
-                backgroundImage:AssetImage('images/liupetigue_888.jpg'),),
+                backgroundImage: postsAllContent.userPostInfo!.image_url != null ?
+                NetworkImage('${postsAllContent.userPostInfo!.image_url}'):
+                    AssetImage('images/user.png')
+                ,),
               SizedBox(width: 15.0,),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      Text('Ibrahim',
+                      Text('${postsAllContent.userPostInfo!.first_name} ${postsAllContent.userPostInfo!.last_name}',
                         style: TextStyle(
                             decoration:TextDecoration.none,
                             fontSize: 15.0,
@@ -163,10 +166,10 @@ Widget CreateItem(
 
                   //15:02:20
                   //2024-06-22T15:02:20
-                  dateTime.month - int.parse(month) != 0 ? Text('${dateTime.month - int.parse(month)}mon'):
-                  dateTime.month - int.parse(month) == 0 && dateTime.day - int.parse(day) != 0 ? Text('${dateTime.day - int.parse(day)}d'):
-                  dateTime.month - int.parse(month) == 0 && dateTime.day - int.parse(day) == 0 && dateTime.hour - int.parse(hour) != 0 ? Text('${dateTime.hour - int.parse(hour)}h'):
-                  Text('${dateTime.minute - int.parse(minute)}min')
+                  dateTime.month - int.parse(month) != 0 ? Text('${dateTime.month - int.parse(month)}mon',style: TextStyle(color: Colors.grey[200]),):
+                  dateTime.month - int.parse(month) == 0 && dateTime.day - int.parse(day) != 0 ? Text('${dateTime.day - int.parse(day)}d',style: TextStyle(color: Colors.grey[200])):
+                  dateTime.month - int.parse(month) == 0 && dateTime.day - int.parse(day) == 0 && dateTime.hour - int.parse(hour) != 0 ? Text('${dateTime.hour - int.parse(hour)}h',style: TextStyle(color: Colors.grey[200])):
+                  Text('${dateTime.minute - int.parse(minute)}min',style: TextStyle(color: Colors.grey[200]))
                   ,
                 ],
               ),

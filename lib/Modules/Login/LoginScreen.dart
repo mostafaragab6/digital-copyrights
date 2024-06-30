@@ -48,6 +48,8 @@ class _LoginState extends State<Login> {
               AppCubit.ACubit(context).GetProfileData();
               AppCubit.ACubit(context).GetPostsAllData();
               AppCubit.ACubit(context).GetNotification();
+              AppCubit.ACubit(context).GetUserPostsData();
+
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(

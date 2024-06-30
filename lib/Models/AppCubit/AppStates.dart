@@ -14,6 +14,10 @@ class GetPostsAllDataLoading extends AppStates{}
 class GetPostsAllDataSuccess extends AppStates{}
 class GetPostsAllDataError extends AppStates{}
 
+class GetUserPostsAllDataLoading extends AppStates{}
+class GetUserPostsAllDataSuccess extends AppStates{}
+class GetUserPostsAllDataError extends AppStates{}
+
 class SetPostLoading extends AppStates{}
 class SetPostSuccess extends AppStates{}
 class SetPostError extends AppStates{}
