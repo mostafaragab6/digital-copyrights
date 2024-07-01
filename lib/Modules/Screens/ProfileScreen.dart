@@ -56,7 +56,7 @@ class Profile extends StatelessWidget {
                                 CircleAvatar(
                                   radius: 70.0,
                                   child:cubit.profileData!.image_url != null ?
-                                  ClipOval(child: Image(image: AssetImage("${cubit.profileData!.image_url}"),width: 300.0,fit: BoxFit.cover,)):
+                                  ClipOval(child: Image(image: NetworkImage("${cubit.profileData!.image_url}"),height: 300,width: 300.0,fit: BoxFit.cover,)):
                                   ClipOval(child: Image(image: AssetImage("images/user.png"),width: 300.0,fit: BoxFit.cover,)),
                                 ),
                                 SizedBox(height: 30.0,),

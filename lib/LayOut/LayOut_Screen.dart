@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../Const/Components.dart';
 import '../../Models/AppCubit/AppCubit.dart';
 import '../../Models/AppCubit/AppStates.dart';
+import '../Modules/Login/LoginScreen.dart';
+import '../Remote/CacheHelper.dart';
 
 class SocialAppLayout extends StatelessWidget {
 
@@ -18,13 +20,10 @@ class SocialAppLayout extends StatelessWidget {
 
             leading: Padding(
               padding: const EdgeInsetsDirectional.only(start: 20.0),
-              child: Icon(Cubit.icons[Cubit.currentIndex],size: 40.0,color: Colors.white,),
+              child: Icon(Cubit.icons[Cubit.currentIndex],size: 30.0,color: Colors.white,),
             ),
-            title: Text('${Cubit.Titles[Cubit.currentIndex]}',),
+            title: Text('${Cubit.Titles[Cubit.currentIndex]}',style: TextStyle(color:Colors.white,fontSize: 25),),
             actions: [
-              IconButton(onPressed: (){
-                Cubit.FollowUser(id: 9);
-              }, icon: Icon(Icons.notifications)),
               Cubit.Titles[Cubit.currentIndex]=='Home' ? IconButton(
                   onPressed: (){
                     showModalBottomSheet(
@@ -116,7 +115,21 @@ class SocialAppLayout extends StatelessWidget {
                           );
                         });
                   },
-                  icon: Icon(Icons.add_circle_outline)) : SizedBox()
+                  icon: Icon(Icons.add_circle_outline)) : SizedBox(),
+              Cubit.Titles[Cubit.currentIndex]=='Profile' ? IconButton(
+                  onPressed: (){
+                    cachHelper.SaveData(key: 'token', value: '');
+                    Cubit.profileData = null;
+                    Cubit.userPosts = null;
+                    Cubit.notificationData = null;
+                    Cubit.notifiedPostData = null;
+                    Cubit.postsAllData = null;
+                    Cubit.currentIndex = 0;
+
+                    navigateAndFinish(context, Login());
+
+                  },
+                  icon: Icon(Icons.logout)) : SizedBox()
             ],
           ),
           body: Cubit.Screens[Cubit.currentIndex],
@@ -132,7 +145,7 @@ class SocialAppLayout extends StatelessWidget {
                   CircleAvatar(
                     radius: 7.0,
                     backgroundColor: Colors.red,
-                    child: Text('${Cubit.Counter}'),
+                    child: Center(child: Text('${Cubit.notificationNumber}',style: TextStyle(fontSize: 10),)),
 
                   ),
                 ],

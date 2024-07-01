@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
               ),
               themeMode: ThemeMode.light,
               debugShowCheckedModeBanner: false,
-              home:token != null ? SocialAppLayout() : Login()
+              home:token!.isNotEmpty ? SocialAppLayout() : Login()
           );
         },
         listener: (BuildContext context, AppStates state) {  },

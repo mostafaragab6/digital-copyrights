@@ -41,6 +41,21 @@ class DioHelper{
     return await dio.post(url, queryParameters: query, data: data);
   }
 
+  static Future<Response> userCreate (
+      {
+        required String url,
+        Map<String,dynamic>? query,
+        FormData? data,
+
+      }
+      )async {
+    dio.options.headers = {
+      'Content-Type': 'multipart/form-data',
+      'Accept': 'application/json',
+    };
+    return await dio.post(url, queryParameters: query, data: data);
+  }
+
   static Future<Response> PostData (
       {
         required String url,

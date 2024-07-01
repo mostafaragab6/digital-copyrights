@@ -6,7 +6,7 @@ class PostsAllData{
   PostsAllData.fromJson(Map<String,dynamic> json){
     message = json['message'];
     json['posts'].forEach((element){
-      content.insert(0,PostsAllContent.fromJson(element));
+      content.add(PostsAllContent.fromJson(element));
     });
   }
 
@@ -26,7 +26,7 @@ class PostsAllContent{
     image_url = json['image_url'];
     id = json['id'];
     created_at = json['created_at'];
-    userPostInfo = UserPostInfo.fromJson(json['user']);
+    userPostInfo = json['user'] != null ? UserPostInfo.fromJson(json['user']): null;
   }
 }
 
