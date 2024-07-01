@@ -104,6 +104,8 @@ class AppCubit extends Cubit<AppStates>{
 
       profileData = ProfileData.fromJson(value.data);
       print(profileData!.email);
+      print('this is my image >>>>>>>> $profileData!.image_url');
+
       emit(GetProfileDataSuccess());
     }).
     catchError((onError){
@@ -138,6 +140,7 @@ class AppCubit extends Cubit<AppStates>{
       flag = true;
       print('added successfully');
       GetPostsAllData();
+      GetUserPostsData();
       emit(SetPostSuccess());
 
     }).catchError((onError){
@@ -170,6 +173,7 @@ class AppCubit extends Cubit<AppStates>{
 
   }
 
+  int notificationNumber = 0;
   NotificationData? notificationData;
 
   void GetNotification(){
@@ -182,6 +186,7 @@ class AppCubit extends Cubit<AppStates>{
 
       notificationData = NotificationData.fromJson(value.data);
 
+      notificationNumber = notificationData!.nData.length;
       emit(GetNotificationSuccess());
     }
     ).catchError((error){
@@ -245,12 +250,6 @@ class AppCubit extends Cubit<AppStates>{
 
 
 
-  bool love = false;
-  void ChangeReact (){
-    love= !love;
-    emit(ChangeReactState());
-
-  }
 
 
   void ChangeCounter(){

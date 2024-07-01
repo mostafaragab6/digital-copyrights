@@ -20,7 +20,6 @@ class _LoginState extends State<Login> {
   var emailController = TextEditingController();
   var passController = TextEditingController();
   var formKey = GlobalKey<FormState>();
-  bool isPass = true;
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +80,7 @@ class _LoginState extends State<Login> {
           }
         },
         builder: (BuildContext context, state) {
+          var cubit = LoginCubit.get(context);
           return Scaffold(
             body: Stack(
               alignment: Alignment.topCenter,
@@ -223,7 +223,7 @@ class _LoginState extends State<Login> {
                               ),
                             ),
                             BiuldForm(
-                              isPassword: isPass,
+                              isPassword: cubit.isPass,
                               controller: passController,
                               type: TextInputType.visiblePassword,
                               label: '',
@@ -232,16 +232,11 @@ class _LoginState extends State<Login> {
                                   return 'Please enter your password';
                                 }
                               },
-                              suffix: isPass
+                              suffix: cubit.isPass
                                   ? Icons.visibility_off_outlined
                                   : Icons.visibility_outlined,
                               onClick: () {
-                                if (formKey.currentState!.validate()) {
-                                  LoginCubit.get(context).userLogin(
-                                    emailController.text,
-                                    passController.text,
-                                  );
-                                }
+                                cubit.ChangePasswordVisibility();
                               },
                             ),
                             SizedBox(height: 50),
@@ -256,6 +251,7 @@ class _LoginState extends State<Login> {
                                       emailController.text,
                                       passController.text,
                                     );
+
                                   }
                                 },
                               ),

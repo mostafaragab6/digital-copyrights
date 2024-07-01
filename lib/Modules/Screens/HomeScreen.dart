@@ -18,99 +18,107 @@ class HomeScreen extends StatelessWidget {
     return BlocConsumer<AppCubit,AppStates>(
       builder: (BuildContext context, AppStates state) {
         var cubit = AppCubit.ACubit(context);
-        return Stack(
-          alignment: Alignment.topLeft,
-          children: [
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      transform:GradientRotation(44) ,
-                      begin:Alignment.topRight ,
-                      end: Alignment.bottomLeft,
-                      colors: [
-                        MaterialColor(0xFF1B0810, {}),
+        return RefreshIndicator(
+          onRefresh: () async {
+            await Future.delayed(Duration(seconds: 1));
+           cubit.GetProfileData();
+           cubit.GetPostsAllData();
+           cubit.GetNotification();
+           cubit.GetUserPostsData();
+          },
+          child: Stack(
+            alignment: Alignment.topLeft,
+            children: [
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        transform:GradientRotation(44) ,
+                        begin:Alignment.topRight ,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          MaterialColor(0xFF1B0810, {}),
 
-                        Colors.black,
-                        //Colors.black,
+                          Colors.black,
+                          //Colors.black,
 
-                        MaterialColor(0xFF021222, {})
-                      ])),
-            ),
-            Padding(
-              padding: const EdgeInsetsDirectional.only(top: 10.0,start: 10.0,end: 10.0 ),
-              child: Row(
-                children: [
-
-                  Text('Good Morning, ',
-                    style: TextStyle(
-                        decoration:TextDecoration.none,
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.grey[300]
-                    ),),
-                  Spacer(),
-
-                ],
+                          MaterialColor(0xFF021222, {})
+                        ])),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsetsDirectional.only(top: 10.0,start: 10.0,end: 10.0 ),
+                child: Row(
+                  children: [
+
+                    Text('Good Morning, ',
+                      style: TextStyle(
+                          decoration:TextDecoration.none,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey[300]
+                      ),),
+                    Spacer(),
+
+                  ],
+                ),
+              ),
 
 
-            Padding(
-              padding: const EdgeInsetsDirectional.only(top:50.0),
-              child: ConditionalBuilder(
-                condition: cubit.postsAllData != null,
-                builder: (BuildContext context) {
-                  return ListView.separated(
+              Padding(
+                padding: const EdgeInsetsDirectional.only(top:50.0),
+                child: ConditionalBuilder(
+                  condition: cubit.postsAllData != null,
+                  builder: (BuildContext context) {
+                    return ListView.separated(
 
-                      physics: BouncingScrollPhysics(),
-                      itemBuilder: (context , index){
+                        itemBuilder: (context , index){
 
-                        String dateTimeString = cubit.postsAllData!.content[index].created_at!;
+                          String dateTimeString = cubit.postsAllData!.content[index].created_at!;
 
 
-                        String year = dateTimeString.substring(0, 4);
-                        String month = dateTimeString.substring(5, 7);
-                        String day = dateTimeString.substring(8, 10);
-                        String hour = dateTimeString.substring(11, 13);
-                        String minute = dateTimeString.substring(14, 16);
-                        return Column(
-                          children: [
-                            cubit.flag? Center(child: CircularProgressIndicator()):SizedBox(),
-                            cubit.flag?SizedBox(height: 10.0,):SizedBox(),
-                            CreateItem(
-                              cubit: cubit,
-                              postsAllContent: cubit.postsAllData!.content[index],
-                              dateTime: dateTime,
-                              day: day,
-                              hour: hour,
-                              minute: minute,
-                              month: month,
-                                year: year
-                            ),
-                          ],
-                        );
-                      },
-                      separatorBuilder: (context , index)=> Padding(
-                        padding: const EdgeInsetsDirectional.symmetric(horizontal: 20.0),
-                        child: Container(
-                          width: double.infinity,
-                          height: 1.0,
-                          color: Colors.grey[800],
+                          String year = dateTimeString.substring(0, 4);
+                          String month = dateTimeString.substring(5, 7);
+                          String day = dateTimeString.substring(8, 10);
+                          String hour = dateTimeString.substring(11, 13);
+                          String minute = dateTimeString.substring(14, 16);
+                          return Column(
+                            children: [
+                              cubit.flag? Center(child: CircularProgressIndicator()):SizedBox(),
+                              cubit.flag?SizedBox(height: 10.0,):SizedBox(),
+                              CreateItem(
+                                cubit: cubit,
+                                postsAllContent: cubit.postsAllData!.content[index],
+                                dateTime: dateTime,
+                                day: day,
+                                hour: hour,
+                                minute: minute,
+                                month: month,
+                                  year: year
+                              ),
+                            ],
+                          );
+                        },
+                        separatorBuilder: (context , index)=> Padding(
+                          padding: const EdgeInsetsDirectional.symmetric(horizontal: 20.0),
+                          child: Container(
+                            width: double.infinity,
+                            height: 1.0,
+                            color: Colors.grey[800],
+                          ),
                         ),
-                      ),
-                      itemCount: cubit.postsAllData!.content.length);
-                },
-                fallback: (BuildContext context) {
-                  return Center(
-                    child: CircularProgressIndicator()
-                    ,);
-                },
+                        itemCount: cubit.postsAllData!.content.length);
+                  },
+                  fallback: (BuildContext context) {
+                    return Center(
+                      child: CircularProgressIndicator()
+                      ,);
+                  },
 
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
 
       },
@@ -142,9 +150,9 @@ Widget CreateItem(
             children: [
               CircleAvatar(
                 radius: 19.0,
-                backgroundImage: postsAllContent.userPostInfo!.image_url != null ?
-                NetworkImage('${postsAllContent.userPostInfo!.image_url}'):
-                    AssetImage('images/user.png')
+                backgroundImage: postsAllContent.userPostInfo!.image_url == null || postsAllContent.userPostInfo == null ?
+                AssetImage('images/user.png'):
+                NetworkImage('${postsAllContent.userPostInfo!.image_url}')
                 ,),
               SizedBox(width: 15.0,),
               Column(
@@ -152,13 +160,19 @@ Widget CreateItem(
                 children: [
                   Row(
                     children: [
-                      Text('${postsAllContent.userPostInfo!.first_name} ${postsAllContent.userPostInfo!.last_name}',
+                       postsAllContent.userPostInfo != null ?Text('${postsAllContent.userPostInfo!.first_name} ${postsAllContent.userPostInfo!.last_name}',
                         style: TextStyle(
                             decoration:TextDecoration.none,
                             fontSize: 15.0,
                             fontWeight: FontWeight.w600,
                             color: Colors.grey[300]
-                        ),),
+                        ),):Text('Unknown User',
+                         style: TextStyle(
+                             decoration:TextDecoration.none,
+                             fontSize: 15.0,
+                             fontWeight: FontWeight.w600,
+                             color: Colors.grey[300]
+                         ),),
                       SizedBox(width: 5.0,),
                       Icon(Icons.check_circle, color: Colors.blue,size: 19.0,),
                     ],
@@ -185,7 +199,7 @@ Widget CreateItem(
 
 
 
-        postsAllContent.title != null && postsAllContent.image_url == null ?Text('${postsAllContent.title}',
+        postsAllContent.title != null && (postsAllContent.image_url == null || postsAllContent.image_url!.endsWith("media/")) ?Text('${postsAllContent.title}',
           style:
           TextStyle(
               height: 2.0,
