@@ -9,11 +9,7 @@ import 'LayOut/LayOut_Screen.dart';
 import 'Remote/CacheHelper.dart';
 import 'Remote/DioHelper.dart';
 
-
-
-
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
 
   DioHelper.init();
@@ -22,65 +18,52 @@ void main() async {
 
   token = cachHelper.getData(key: 'token');
   runApp(MyApp());
-
-
 }
-
-
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => AppCubit()..GetPostsAllData()..GetProfileData()..GetNotification()..GetUserPostsData(),
-      child: BlocConsumer<AppCubit,AppStates>(
+      create: (BuildContext context) => AppCubit()
+        ..GetPostsAllData()
+        ..GetProfileData()
+        ..GetNotification()
+        ..GetUserPostsData(),
+      child: BlocConsumer<AppCubit, AppStates>(
         builder: (BuildContext context, AppStates state) {
           return MaterialApp(
-
               theme: ThemeData(
-                //fontFamily: 'newFont',
-                  iconTheme: IconThemeData(
-                      color: Colors.black
-                  ),
+                  //fontFamily: 'newFont',
+                  iconTheme: IconThemeData(color: Colors.black),
                   cardTheme: CardTheme(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-                      color: Colors.grey[200]
-                  ),
-
-
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0)),
+                      color: Colors.grey[200]),
                   primarySwatch: Colors.teal,
                   floatingActionButtonTheme: FloatingActionButtonThemeData(
-                      backgroundColor: Colors.teal[700]
-                  ),
+                      backgroundColor: Colors.teal[700]),
                   scaffoldBackgroundColor: Colors.white,
                   appBarTheme: AppBarTheme(
-
-                    iconTheme: IconThemeData(
-                        color: Colors.white
-                    ),
+                    iconTheme: IconThemeData(color: Colors.white),
                     elevation: 0.0,
                     systemOverlayStyle: SystemUiOverlayStyle(
                         statusBarColor: Colors.black,
-                        statusBarIconBrightness: Brightness.light
-                    ),
+                        statusBarIconBrightness: Brightness.light),
                     backgroundColor: Colors.black,
-                    titleTextStyle: TextStyle(color: Colors.white ,fontSize: 35.0),
+                    titleTextStyle:
+                        TextStyle(color: Colors.white, fontSize: 35.0),
                     //titleSpacing: 25.0
                   ),
                   bottomNavigationBarTheme: BottomNavigationBarThemeData(
                       type: BottomNavigationBarType.fixed,
                       selectedItemColor: Colors.white,
                       unselectedItemColor: Colors.grey[700],
-                      backgroundColor: Colors.black
-                  )
-              ),
+                      backgroundColor: Colors.black)),
               themeMode: ThemeMode.light,
               debugShowCheckedModeBanner: false,
-              home:token!.isNotEmpty ? SocialAppLayout() : Login()
-          );
+              home: token!.isNotEmpty ? SocialAppLayout() : Login());
         },
-        listener: (BuildContext context, AppStates state) {  },
-
+        listener: (BuildContext context, AppStates state) {},
       ),
     );
   }
