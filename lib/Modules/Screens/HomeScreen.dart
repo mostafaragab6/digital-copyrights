@@ -150,9 +150,15 @@ Widget CreateItem(
             children: [
               CircleAvatar(
                 radius: 19.0,
+<<<<<<< HEAD
                 backgroundImage:
                 AssetImage('images/user.png')
 
+=======
+                backgroundImage: postsAllContent.userPostInfo!.image_url == null || postsAllContent.userPostInfo == null ?
+                AssetImage('images/user.png'):
+                NetworkImage('${postsAllContent.userPostInfo!.image_url}')
+>>>>>>> 4c68008072001c35f36edcd57660f7132465f9b0
                 ,),
               SizedBox(width: 15.0,),
               Column(

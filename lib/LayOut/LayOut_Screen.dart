@@ -4,7 +4,10 @@ import '../Const/Components.dart';
 import '../../Models/AppCubit/AppCubit.dart';
 import '../../Models/AppCubit/AppStates.dart';
 import '../Modules/Login/LoginScreen.dart';
+<<<<<<< HEAD
 import '../Remote/CacheHelper.dart';
+=======
+>>>>>>> 4c68008072001c35f36edcd57660f7132465f9b0
 
 class SocialAppLayout extends StatelessWidget {
 
@@ -118,7 +121,11 @@ class SocialAppLayout extends StatelessWidget {
                   icon: Icon(Icons.add_circle_outline)) : SizedBox(),
               Cubit.Titles[Cubit.currentIndex]=='Profile' ? IconButton(
                   onPressed: (){
+<<<<<<< HEAD
                     cachHelper.SaveData(key: 'token', value: '');
+=======
+                    token = null;
+>>>>>>> 4c68008072001c35f36edcd57660f7132465f9b0
                     Cubit.profileData = null;
                     Cubit.userPosts = null;
                     Cubit.notificationData = null;
